@@ -17,10 +17,6 @@ setup(
             "my_project=core.main:main",  # Entry point for the main function
         ]
     },
-    package_data={
-        # Include all files in these folders (like facial images, keys, settings, etc.)
-        '': ['data/facial_images/*', 'data/folder_table/*', 'data/images/*', 'data/key/*', 'data/settings/*'],
-    },
     author="Trần Gia Khiêm",
     author_email="giakhiem417@gmail.com",
     description="A project for folder proctection",

@@ -24,19 +24,33 @@
 
 ```plaintext
 project_root/
-├── core/
-│   ├── encryption.py        # Encryption and decryption functionalities
-│   ├── login_window.py      # Handles user login and face recognition logic
-│   └── password_evaluation.py # Validates password strength
-├── facial_images/           # Stores user face images for face recognition
-├── folder_table/            # Stores folder protection state
-├── images/                  # UI-related images (e.g., icons)
-├── key/                     # Stores encryption keys
-├── settings/                # Configuration files
-├── main.py                  # Entry point for the application
-├── main_window.py           # Main UI logic
-├── README.md                # Project documentation
-└── requirements.txt         # List of project dependencies
+│
+├── core/                           # Core application logic
+│   ├── encryption.py               # Encryption logic
+│   ├── face_identification.py      # Face identification functionality
+│   ├── folder_protection.py        # Folder protection functionality
+│   ├── login_window.py             # Login window logic
+│   ├── main_window.py              # Main window UI logic
+│   ├── password_evaluation.py      # Password strength evaluation
+│
+├── data/                           # Application data (should avoid large files here)
+│   ├── facial_images/              # Saved facial images
+│   ├── folder_table/               # Folder protection table
+│   ├── key/                        # Encryption keys
+│   ├── settings/                   # App settings
+│
+├── assets/                         # Static files (images, icons, etc.)
+│   ├── images/                     # App-specific images/icons
+│
+├── tests/                          # Unit and integration tests
+│   ├── test_folder_protection.py   # Unit test for folder_protection.py
+│   ├── test_password_evaluation.py # Unit test for face_recognition.py
+│   ├── ...                         # More tests as needed
+│
+├── main.py                         # Entry point for the program
+├── .gitignore                   
+├── setup.py                        # Setup script for packaging the app
+└── README.md                       # Documentation about the project
 ```
 
 ## Usage
@@ -57,3 +71,5 @@ project_root/
 - OpenCV
 - DeepFace
 - Tkinter
+- Pillow
+- PyCryptodome
