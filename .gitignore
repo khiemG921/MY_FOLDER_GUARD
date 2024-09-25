@@ -1,0 +1,6 @@
+/.vscode
+data/facial_images/*.jpg
+data/key/*.txt
+data/settings/*.txt
+data/folder_table/*.txt
+core/__pycache__/*.pyc

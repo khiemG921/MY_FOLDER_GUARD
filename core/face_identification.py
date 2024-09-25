@@ -46,13 +46,12 @@ def identify_face():
         return False
 
 
-
 def capture_face():
     # Thiết lập kết nối với webcam
     cap = cv2.VideoCapture(0)
 
     for direction in DIRECTIONS:
-        messagebox.showinfo("Face ID", f"Please move your face {direction} and press 'c' to capture the image.")
+        messagebox.showinfo("Face ID", f"Please move your face {direction} and press 'C' to capture the image.")
 
         while cap.isOpened():
             ret, frame = cap.read()

@@ -130,7 +130,7 @@ class Login_Window:
             if password == saved_password:
                 self.open_main_window()
             else:
-                messagebox.showerror("Login", "Incorrect password!")
+                messagebox.showerror("Login", "INCORRECT PASSWORD!")
 
 
     def on_password_entry(self, event):
@@ -212,7 +212,7 @@ class Login_Window:
             else:
                 return
         else:
-            messagebox.showwarning("Face ID", "Face ID is turned off.")
+            messagebox.showwarning("Face ID", "Face ID is TURNED OFF.")
 
 
     def open_main_window(self):
