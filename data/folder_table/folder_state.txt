@@ -1,2 +1,0 @@
-False|D:/KHIÊM/ĐẠI HỌC/HK III - NĂM 2/Cơ sở trí tuệ nhân tạo/Lab/2|Encrypt
-False|D:/KHIÊM/ĐẠI HỌC/HK III - NĂM 2/Cơ sở trí tuệ nhân tạo/Lab/1|Read-Only
