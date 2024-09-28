@@ -3,4 +3,5 @@ data/facial_images/*.jpg
 data/key/*.txt
 data/settings/*.txt
 data/folder_table/*.txt
-core/__pycache__/*.pyc
+core/__pycache__/*.cpython-312.pyc
+core/__pycache__/*.cpython-310.pyc

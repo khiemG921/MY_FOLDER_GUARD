@@ -45,11 +45,13 @@ project_root/
 ├── tests/                          # Unit and integration tests
 │   ├── test_folder_protection.py   # Unit test for folder_protection.py
 │   ├── test_password_evaluation.py # Unit test for face_recognition.py
+│   ├── test_encryption.py          # Unit test for encryption.py
 │   ├── ...                         # More tests as needed
 │
-├── main.py                         # Entry point for the program
 ├── .gitignore                   
+├── main.py                         # Entry point for the program
 ├── setup.py                        # Setup script for packaging the app
+├── requirements.txt                # Package requirements
 └── README.md                       # Documentation about the project
 ```
 
