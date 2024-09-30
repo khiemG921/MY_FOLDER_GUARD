@@ -11,11 +11,10 @@
   - **Fully Protect**: Combines encryption, hiding, and locking for complete security.
   
 - **Face Recognition**:
-  - Uses `DeepFace` and OpenCV to provide face recognition-based authentication.
-  - Detects masked faces using a specialized mask detection model.
+  - Use `DeepFace` and OpenCV to provide face recognition-based authentication.
 
 - **Password Strength Validation**:
-  - Evaluates password strength based on length, inclusion of uppercase, lowercase, numbers, and special characters.
+  - Evaluate password strength based on length and the inclusion of uppercase, lowercase, numbers, and special characters.
   
 - **UI Interface**:
   - Simple user-friendly graphical interface built with `Tkinter`, supporting folder protection selection, face ID creation, and toggling protection modes.
