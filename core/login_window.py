@@ -13,12 +13,12 @@ class Login_Window:
         self.root.geometry("400x200")
         self.root.resizable(False, False)
 
-        # Kiểm tra xem file mật khẩu có tồn tại không
+        # Check if the password file exists
         if os.path.exists("./data/key/password_key.txt"):
-            # Nếu file tồn tại thì hiển thị giao diện đăng nhập
+            # If the file exists, display the login interface
             self.show_login_page()
         else:
-            # Nếu file không tồn tại thì hiển thị giao diện tạo mật khẩu
+            # If the file does not exist, display the password creation interface
             self.show_create_password_page()
 
 
@@ -41,7 +41,7 @@ class Login_Window:
         # "Forgot Password?" Link
         forgot_password_label = tk.Label(frame, text="Forgot password?", fg="blue", cursor="hand2", font=("Arial", 8, "underline"))
         forgot_password_label.grid(row=1, column=0, columnspan=2, sticky="w", padx=(0, 10))
-        forgot_password_label.bind("<Button-1>", self.forgot_password)
+        forgot_password_label.bind("<Button-1>", self.forgot_password)  # Bind event for forgot password link
 
         # Buttons Frame
         button_frame = tk.Frame(self.root)
@@ -74,40 +74,40 @@ class Login_Window:
         new_password_label = tk.Label(frame, text="Create a new password:", font=("Arial", 10))
         new_password_label.grid(row=0, column=0, sticky="e", padx=(0, 10))
 
-        # New Password Entry (bắt buộc)
+        # New Password Entry (mandatory)
         self.new_password_entry = tk.Entry(frame, width=30, show="*", font=("Arial", 10))
         self.new_password_entry.grid(row=0, column=1, pady=10)
 
-        # Bind sự kiện để kiểm tra mật khẩu khi nhập vào
+        # Bind event to check password strength on input
         self.new_password_entry.bind("<FocusOut>", self.on_password_entry)
 
         # Confirm Password Label
         confirm_password_label = tk.Label(frame, text="Confirm your password:", font=("Arial", 10))
         confirm_password_label.grid(row=1, column=0, sticky="e", padx=(0, 10))
 
-        # Confirm Password Entry (bắt buộc) - ban đầu khóa
+        # Confirm Password Entry (mandatory) - initially disabled
         self.confirm_password_entry = tk.Entry(frame, width=30, show="*", font=("Arial", 10))
         self.confirm_password_entry.grid(row=1, column=1, pady=10)
 
-        # Password Strength Label (đặt ngay dưới Confirm Password Entry)
+        # Password Strength Label (placed right below Confirm Password Entry)
         self.password_strength_label = tk.Label(self.root, text="", font=("Arial", 9))
-        self.password_strength_label.place(x=80, y=100)  # Update vị trí phù hợp dưới confirm password
+        self.password_strength_label.place(x=80, y=100)  # Adjusted to appear below confirm password
 
-        # Thêm icon cho nút làm mới (refresh)
+        # Add icon for refresh button
         refresh_icon = Image.open("./assets/rotate-right.png").resize((15, 15))
         self.refresh_icon = ImageTk.PhotoImage(refresh_icon)
 
         self.refresh_button = tk.Button(self.root, image=self.refresh_icon, command=self.refresh_recommendation, bd=0)
         self.refresh_button.place(x=350, y=100)
-        self.refresh_button.config(state="disabled")
+        self.refresh_button.config(state="disabled")  # Disabled initially
 
-        # Thêm icon cho nút sao chép (copy)
+        # Add icon for copy button
         copy_icon = Image.open("./assets/copy-alt.png").resize((15, 15))
         self.copy_icon = ImageTk.PhotoImage(copy_icon)
 
         self.copy_button = tk.Button(self.root, image=self.copy_icon, command=self.copy_password, bd=0)
         self.copy_button.place(x=370, y=100)
-        self.copy_button.config(state="disabled")
+        self.copy_button.config(state="disabled")  # Disabled initially
 
         # Buttons Frame
         button_frame = tk.Frame(self.root)
@@ -124,7 +124,7 @@ class Login_Window:
 
     def check_password(self):
         password = self.password_entry.get()
-        # Kiểm tra mật khẩu trong file
+        # Check the password in the file
         with open("./data/key/password_key.txt", "r") as file:
             saved_password = file.read().strip()
             if password == saved_password:
@@ -136,31 +136,31 @@ class Login_Window:
     def on_password_entry(self, event):
         new_password = self.new_password_entry.get().strip()
 
-        # Kiểm tra độ mạnh của mật khẩu
+        # Check password strength
         is_strong, self.recommend_password = evaluate_password(new_password)
 
         if is_strong:
             self.password_strength_label.config(text="Good password.", fg="#60A500", font=("Arial", 12, "bold"))
-            self.ok_button.config(state='normal')  # Kích hoạt nút OK khi mật khẩu mạnh
-            self.refresh_button.config(state='disabled')  # Vô hiệu hóa nút làm mới
-            self.copy_button.config(state='disabled') # Vô hiệu hóa nút sao chép
+            self.ok_button.config(state='normal')  # Enable OK button if the password is strong
+            self.refresh_button.config(state='disabled')  # Disable refresh button
+            self.copy_button.config(state='disabled')  # Disable copy button
         else:
             self.password_strength_label.config(text=f"Weak password. Recommend: {self.recommend_password}", fg="red", font=("Arial", 10))
-            self.ok_button.config(state='disabled')  # Khóa nút OK khi mật khẩu yếu
-            self.refresh_button.config(state='normal')  # Kích hoạt nút làm mới khi mật khẩu yếu
-            self.copy_button.config(state='normal') # Kích hoạt nút sao chép khi mật khẩu yếu
+            self.ok_button.config(state='disabled')  # Disable OK button if the password is weak
+            self.refresh_button.config(state='normal')  # Enable refresh button
+            self.copy_button.config(state='normal')  # Enable copy button
 
 
     def refresh_recommendation(self):
-        # Tạo mật khẩu đề nghị mới
-        _, self.recommend_password = evaluate_password("")  # Gọi lại generate_password từ evaluate_password
+        # Generate a new recommended password
+        _, self.recommend_password = evaluate_password("")  # Call generate_password from evaluate_password
         self.password_strength_label.config(text=f"Weak password. Recommend: {self.recommend_password}", fg="red")
 
 
     def create_password(self):
         new_password = self.new_password_entry.get().strip()
 
-        # Kiểm tra mật khẩu mới
+        # Check the new password
         is_strong, message = evaluate_password(new_password)
 
         if is_strong:
@@ -170,7 +170,7 @@ class Login_Window:
         
         confirm_password = self.confirm_password_entry.get().strip()
 
-        # Xác nhận mật khẩu
+        # Confirm password
         if new_password != confirm_password:
             messagebox.showerror("Error", "Passwords do not match!")
             return
@@ -179,23 +179,23 @@ class Login_Window:
             messagebox.showerror("Error", "Please enter and confirm your password!")
             return
 
-        # Lưu mật khẩu vào file
+        # Save the password to the file
         with open("./data/key/password_key.txt", "w") as file:
             file.write(new_password)
 
-        # Chuyển đến Main Window
+        # Open the main window
         self.open_main_window()
 
 
     def copy_password(self):
-        # Sao chép mật khẩu đề xuất vào clipboard
+        # Copy the recommended password to the clipboard
         self.root.clipboard_clear()
         self.root.clipboard_append(self.recommend_password)
                 
-        # Copied Label
+        # Display "Copied" label
         copied_label = tk.Label(self.root, text="Copied", font=("Arial", 10))
         copied_label.place(x=385, y=98)
-        self.root.after(3000, copied_label.destroy)
+        self.root.after(3000, copied_label.destroy)  # Destroy the label after 3 seconds
 
 
     def forgot_password(self, event):
@@ -203,11 +203,12 @@ class Login_Window:
 
 
     def face_id_login(self):
+        # Check if Face ID is enabled
         with open("./data/settings/info.txt") as f:
             face_id_on = f.readline().strip()
             
         if face_id_on == "T":
-            if identify_face():
+            if identify_face():  # Attempt face recognition
                 self.open_main_window()
             else:
                 return
@@ -216,7 +217,8 @@ class Login_Window:
 
 
     def open_main_window(self):
-        self.root.destroy()
-        main_root = tk.Tk()
-        main_app = Main_Window(main_root)
-        main_root.mainloop()
+        # Open the main window after successful login
+        self.root.withdraw()
+        new_window = tk.Toplevel(self.root)
+        main_window = Main_Window(new_window)
+        new_window.mainloop()

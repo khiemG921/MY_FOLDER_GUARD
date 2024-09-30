@@ -75,7 +75,6 @@ class Search_Bar():
 
     # Function to search for folder
     def search_folder(self, root, event=None):
-        """Search folder based on input and add to table if valid"""
         folder_path = self.search_entry.get()             # Get the input text
         if folder_path and os.path.isdir(folder_path):    # Check if it's a valid directory
             self.folder_table.insert_folder(folder_path)  # Insert folder into folder_table
@@ -104,27 +103,25 @@ class Search_Bar():
 
 
     def disable_widgets(self):
-        """Vô hiệu hóa các widget trong giao diện."""
-        self.search_entry.config(state="disabled")      # Vô hiệu hóa thanh tìm kiếm
-        self.search_icon.config(state="disabled")       # Vô hiệu hóa nút tìm kiếm
-        self.add_button.config(state="disabled")        # Vô hiệu hóa nút + ADD
-        self.folder_table.select_all_checkbox.config(state="disabled")  # Vô hiệu hóa nút Select All
-        self.folder_table.remove_button.config(state="disabled")  # Vô hiệu hóa nút Remove All
+        self.search_entry.config(state="disabled")      # Disable the search bar
+        self.search_icon.config(state="disabled")       # Disable the search button
+        self.add_button.config(state="disabled")        # Disable the + ADD button
+        self.folder_table.select_all_checkbox.config(state="disabled")  # Disable the Select All checkbox
+        self.folder_table.remove_button.config(state="disabled")  # Disable the Remove All button
 
-        # Loại bỏ sự kiện nhấn chuột vào bảng folder_table để vô hiệu hóa chọn hàng
+        # Unbind mouse click events on the folder_table to disable row selection
         self.folder_table.folder_table.unbind("<Button-1>")
         self.folder_table.folder_table.unbind("<ButtonRelease-1>")
 
 
     def enable_widgets(self):
-        """Kích hoạt lại các widget."""
-        self.search_entry.config(state="normal")        # Kích hoạt lại thanh tìm kiếm
-        self.search_icon.config(state="normal")         # Kích hoạt lại nút tìm kiếm
-        self.add_button.config(state="normal")          # Kích hoạt lại nút + ADD
-        self.folder_table.select_all_checkbox.config(state="normal")  # Kích hoạt lại nút Select All
-        self.folder_table.remove_button.config(state="normal")  # Kích hoạt lại nút Remove All
+        self.search_entry.config(state="normal")        # Re-enable the search bar
+        self.search_icon.config(state="normal")         # Re-enable the search button
+        self.add_button.config(state="normal")          # Re-enable the + ADD button
+        self.folder_table.select_all_checkbox.config(state="normal")  # Re-enable the Select All checkbox
+        self.folder_table.remove_button.config(state="normal")  # Re-enable the Remove All button
 
-        # Bind lại sự kiện nhấn chuột để chọn hàng trong bảng folder_table
+        # Bind the mouse click events again to enable row selection in the folder_table
         self.folder_table.folder_table.bind("<Button-1>", self.folder_table.on_click_select)
         self.folder_table.folder_table.bind("<ButtonRelease-1>", self.folder_table.on_click_combobox)
 

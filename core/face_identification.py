@@ -7,37 +7,40 @@ from tkinter import messagebox
 DIRECTIONS = ['DIRECT', 'UP', 'DOWN', 'LEFT', 'RIGHT']
 
 def identify_face():
-    # Mở camera để nhận diện khuôn mặt
+    # Open the webcam to capture the face
     cap = cv2.VideoCapture(0)
 
+    # Read a frame from the camera
     ret, frame = cap.read()
-    time.sleep(1.5)
-    cap.release()
+    time.sleep(1.5)  # Add a delay to allow the camera to adjust
+    cap.release()  # Release the webcam
 
-    # Cắt ảnh thành 250x250 pixels
+    # Crop the image to 250x250 pixels for facial recognition
     frame = frame[145:145+250, 220:220+250, :]
 
     if not ret:
+        # Display an error message if capturing fails
         messagebox.showerror("Face ID", "Failed to capture face from webcam.")
         return
 
-    # Duyệt qua tất cả các tấm ảnh trong thư mục
+    # Check all images in the folder for face matching
     image_folder = './data/facial_images/'
     found_match = False
     for image_file in os.listdir(image_folder):
         image_path = os.path.join(image_folder, image_file)
         try:
-            # So sánh khuôn mặt với ảnh trong thư mục
+            # Compare the captured face with the current image in the folder
             result = DeepFace.verify(frame, image_path)
 
             if result['verified']:
                 found_match = True
-                break  # Dừng khi tìm thấy ảnh khớp
+                break  # Stop searching when a matching face is found
         except:
             continue
 
     cv2.destroyAllWindows()
-    # Hiển thị thông báo kết quả nhận diện
+    
+    # Display the result of face identification
     if found_match:
         messagebox.showinfo("Face ID", "Face recognized successfully.")
         return True
@@ -47,34 +50,35 @@ def identify_face():
 
 
 def capture_face():
-    # Thiết lập kết nối với webcam
+    # Initialize the webcam
     cap = cv2.VideoCapture(0)
 
+    # Capture images based on movement directions
     for direction in DIRECTIONS:
         messagebox.showinfo("Face ID", f"Please move your face {direction} and press 'C' to capture the image.")
 
         while cap.isOpened():
             ret, frame = cap.read()
 
-            # Cắt ảnh thành 250x250 pixels
+            # Crop the image to 250x250 pixels
             frame = frame[145:145+250, 220:220+250, :]
 
-            # Hiển thị hình ảnh trên màn hình
+            # Display the image in a window
             cv2.imshow("Facial Identification", frame)
 
-            # Nhấn phím 'c' để chụp ảnh
+            # Capture the image when 'c' is pressed
             if cv2.waitKey(1) & 0xFF == ord('c'):
-                # Tạo đường dẫn ảnh duy nhất cho từng hình
+                # Create a unique file path for the captured image
                 img_name = os.path.join("./data/facial_images/", f"{direction}.jpg")
 
-                # Lưu ảnh vào file
+                # Save the image to the file
                 cv2.imwrite(img_name, frame)
                 break
 
-
-    # Giải phóng webcam
+    # Release the webcam
     cap.release()
-    # Đóng cửa sổ hiển thị
+    # Close the display window
     cv2.destroyAllWindows()
 
+    # Notify the user that the capture process is complete
     messagebox.showinfo("Face ID", "Capture completed.")

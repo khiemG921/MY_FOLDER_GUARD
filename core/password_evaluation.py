@@ -1,34 +1,34 @@
 import random
 import string
 
-# Thiết lập chính sách mật khẩu
+# Set password policy
 policy = {
-    'length': 8,          # Mật khẩu tối thiểu 8 ký tự
-    'lowercase': 1,       # Ít nhất 1 chữ thường
-    'uppercase': 1,       # Ít nhất 1 chữ hoa
-    'numbers': 1,         # Ít nhất 1 chữ số
-    'special': 1          # Ít nhất 1 ký tự đặc biệt
+    'length': 8,          # Minimum password length is 8 characters
+    'lowercase': 1,       # At least 1 lowercase letter
+    'uppercase': 1,       # At least 1 uppercase letter
+    'numbers': 1,         # At least 1 digit
+    'special': 1          # At least 1 special character
 }
 
 def generate_password():
-    # Xác định độ dài ngẫu nhiên cho mật khẩu (tối thiểu là giá trị 'length' từ policy)
+    # Determine a random length for the password (minimum length is the 'length' value from the policy)
     length = random.randint(policy['length'], 12)
     
-    # Đảm bảo mật khẩu có ít nhất số ký tự yêu cầu từ mỗi loại
-    num_uppercase = random.randint(policy['uppercase'], length//4)
-    num_numbers = random.randint(policy['numbers'], length//4)
-    num_special = random.randint(policy['special'], length//4)
+    # Ensure the password contains at least the required number of characters from each category
+    num_uppercase = random.randint(policy['uppercase'], length // 4)
+    num_numbers = random.randint(policy['numbers'], length // 4)
+    num_special = random.randint(policy['special'], length // 4)
     
-    # Tính số ký tự còn lại để lấp đầy bằng chữ thường
+    # Calculate the remaining characters to be filled with lowercase letters
     num_lowercase = length - (num_uppercase + num_numbers + num_special)
     
-    # Các tập ký tự
+    # Character sets
     uppercases = string.ascii_uppercase
     lowercases = string.ascii_lowercase
     digits = string.digits
     specials = string.punctuation
     
-    # Tạo các phần tử của mật khẩu
+    # Generate password components
     password = [
         random.choice(uppercases) for _ in range(num_uppercase)
     ] + [
@@ -39,29 +39,29 @@ def generate_password():
         random.choice(lowercases) for _ in range(num_lowercase)
     ]
     
-    # Xáo trộn mật khẩu để ngẫu nhiên hóa
+    # Shuffle the password to randomize the order of characters
     random.shuffle(password)
     
     return ''.join(password)
 
 def evaluate_password(password):
-    # Kiểm tra độ dài
+    # Check the length of the password
     if len(password) < policy['length']:
         return False, generate_password()
     
-    # Kiểm tra số lượng chữ thường
+    # Check the number of lowercase letters
     if sum(1 for c in password if c.islower()) < policy['lowercase']:
         return False, generate_password()
     
-    # Kiểm tra số lượng chữ hoa
+    # Check the number of uppercase letters
     if sum(1 for c in password if c.isupper()) < policy['uppercase']:
         return False, generate_password()
     
-    # Kiểm tra số lượng chữ số
+    # Check the number of digits
     if sum(1 for c in password if c.isdigit()) < policy['numbers']:
         return False, generate_password()
     
-    # Kiểm tra số lượng ký tự đặc biệt
+    # Check the number of special characters
     if sum(1 for c in password if c in string.punctuation) < policy['special']:
         return False, generate_password()
     
